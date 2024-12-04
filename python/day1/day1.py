@@ -4,16 +4,7 @@ def file_to_lst(f) -> tuple[list[int], list[int]]:
     lst1 = [row[0] for row in lst]
     lst2 = [row[1] for row in lst]
     return lst1, lst2
-
-def quicksort_lst(lst) -> list[int]:
-    if len(lst) <= 1:
-        return lst
-    p = lst[len(lst) // 2]
-    l = [x for x in lst if x < p]
-    m = [x for x in lst if x == p]
-    r = [x for x in lst if x > p]
-    return quicksort_lst(l) + m + quicksort_lst(r)
-    
+ 
 def day1(lst1, lst2) -> tuple[int, int]:
     p1 = 0 
     p2 = 0
@@ -26,6 +17,5 @@ def day1(lst1, lst2) -> tuple[int, int]:
     return p1, p2
 
 f = file_to_lst("day1.txt")
-lst1 = quicksort_lst(f[0])
-lst2 = quicksort_lst(f[1])
+lst1, lst2 = sorted(f[0]), sorted(f[1]) # python has a sorted function, rip my quicksort
 print(day1(lst1, lst2))
