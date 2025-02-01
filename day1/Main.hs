@@ -1,6 +1,5 @@
-module Day1 where 
+module Main where 
 import Data.List (sort)
-import System.IO
 
 splitColumns :: String -> ([Int], [Int])
 splitColumns = unzip . map (\[x, y] -> (read x :: Int, read y :: Int)) . map words . lines
