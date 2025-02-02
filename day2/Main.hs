@@ -5,8 +5,8 @@ inputList :: String -> [[Int]]
 inputList = map (map read . words) . lines
 
 isMonotonic :: [Int] -> Bool
-isMonotonic x = x == sortX || x == reverse (sortX)
-  where sortX = sort x
+isMonotonic xs = xs == sortXS || xs == reverse sortXS
+  where sortXS = sort xs
 
 adjDifference :: [Int] -> Bool 
 adjDifference [x, y] = abs (x - y) >= 1 && abs (x - y) <= 3
@@ -14,9 +14,19 @@ adjDifference (x:y:xs)
   | abs (x - y) >= 1 && abs (x - y) <= 3 = adjDifference (y:xs)
   | otherwise                            = False
 
+satisfiesCond :: [Int] -> Bool
+satisfiesCond xs = adjDifference xs && isMonotonic xs
+
+removeOne :: [a] -> [[a]]
+removeOne xs = [take i xs ++ drop (i + 1) xs | i <- [0 .. length xs - 1]] 
+
+checkRemoval :: [Int] -> Bool
+checkRemoval xs = any (\ys -> adjDifference ys && isMonotonic ys) (removeOne xs)
+
 main :: IO ()
 main = do 
   contents <- readFile "input.txt"
   let contentList = inputList contents
-      part1 = length $ filter (\xs -> adjDifference xs && isMonotonic xs) (contentList)
-  print (part1)
+      part1 = length $ filter satisfiesCond contentList
+      part2 = length $ filter checkRemoval contentList
+  print (part1, part2)
