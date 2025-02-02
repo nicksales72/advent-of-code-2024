@@ -17,11 +17,11 @@ adjDifference (x:y:xs)
 satisfiesCond :: [Int] -> Bool
 satisfiesCond xs = adjDifference xs && isMonotonic xs
 
-removeOne :: [a] -> [[a]]
+removeOne :: [Int] -> [[Int]]
 removeOne xs = [take i xs ++ drop (i + 1) xs | i <- [0 .. length xs - 1]] 
 
 checkRemoval :: [Int] -> Bool
-checkRemoval xs = any (\ys -> adjDifference ys && isMonotonic ys) (removeOne xs)
+checkRemoval xs = any satisfiesCond (removeOne xs)
 
 main :: IO ()
 main = do 
